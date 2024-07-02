@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
@@ -30,7 +29,7 @@ public class OpenAIService {
 	public Map<String, String> openAIResponse(String message) {
 		//openAIEntityExample1("");
 		//openAIChatResponse(message);
-		openAIDefualtSystem("tell me a joke","jack sparrow");
+		openAIDefaultSystem("tell me a joke","jack sparrow");
 		return Map.of("response", chatClient.prompt().user(message).call().content());
 	}
 
@@ -41,7 +40,7 @@ public class OpenAIService {
 	 */
 	public Map<String, String> openAIChatResponse(String message) {
 		var chatResponse = chatClient.prompt().user(message).call().chatResponse();
-		log.info(chatResponse.getMetadata().toString());
+	//	log.info(chatResponse.getMetadata().toString());
 		chatResponse.getMetadata().getUsage().getTotalTokens();
 		var response = new HashMap<String,String>();
 		response.put("response", chatResponse.getResult().getOutput().getContent());
@@ -54,7 +53,7 @@ public class OpenAIService {
 	 */
 	public void openAIEntityExample(String message) {
 		Song song = chatClient.prompt().user("Generate the details of any bollywood song.").call().entity(Song.class);
-		log.info(song.toString());
+	//	log.info(song.toString());
 	}
 
 	/**
@@ -64,10 +63,10 @@ public class OpenAIService {
 		List<Song> songs = chatClient.prompt().user("Generate the details of any 5 bollywood song.").call()
 				.entity(new ParameterizedTypeReference<List<Song>>() {
 				});
-		log.info(songs.toString());
+	//	log.info(songs.toString());
 	}
 
-	public void openAIDefualtSystem(String message, String voice) {
+	public void openAIDefaultSystem(String message, String voice) {
 		var response =	friendlyVoiceChatClient
 				.prompt()
 				.system(s-> s.param("voice", voice))
@@ -75,6 +74,5 @@ public class OpenAIService {
 				.call()
 				.content();
 		log.info(response);
-		
 	}
 }
