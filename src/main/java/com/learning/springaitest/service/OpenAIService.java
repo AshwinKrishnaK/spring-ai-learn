@@ -66,6 +66,7 @@ public class OpenAIService {
 	//	log.info(songs.toString());
 	}
 
+	// System Default message example
 	public void openAIDefaultSystem(String message, String voice) {
 		var response =	friendlyVoiceChatClient
 				.prompt()
