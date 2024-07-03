@@ -40,7 +40,7 @@ public interface OpenAIService {
      *
      * @return List of songs
      */
-    public List<Song> openAIListEntityExample1(String message) throws OpenAiApiException;
+    public List<Song> openAIListEntityExample(String message) throws OpenAiApiException;
 
     /**
      * Sends a message to the chat client with a specified voice parameter.

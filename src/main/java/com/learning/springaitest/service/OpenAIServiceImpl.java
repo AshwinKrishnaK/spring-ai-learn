@@ -55,7 +55,7 @@ public class OpenAIServiceImpl implements OpenAIService{
 	}
 
 	@Override
-	public List<Song> openAIListEntityExample1(String message) throws OpenAiApiException {
+	public List<Song> openAIListEntityExample(String message) throws OpenAiApiException {
 		List<Song> songs = chatClient.prompt().user(message).call()
 				.entity(new ParameterizedTypeReference<List<Song>>() {
 				});
