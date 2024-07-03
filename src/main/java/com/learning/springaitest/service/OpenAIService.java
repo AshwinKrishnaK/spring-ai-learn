@@ -1,79 +1,55 @@
 package com.learning.springaitest.service;
 
+import com.learning.springaitest.model.Song;
+import org.springframework.ai.openai.api.common.OpenAiApiException;
+import org.springframework.core.ParameterizedTypeReference;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.stereotype.Service;
+public interface OpenAIService {
 
-import com.learning.springaitest.model.Song;
+    /**
+     * Method to fetch an AI response based on the given message.
+     *
+     * @param message The message to send to the AI.
+     * @return A Map containing the AI's response under the key "response".
+     */
+    public Map<String, String> openAIResponse(String message) throws OpenAiApiException ;
 
-import lombok.extern.slf4j.Slf4j;
+    /**
+     * Retrieves a chat response and its metadata from the AI based on the given message.
+     *
+     * @param message The message to send to the AI.
+     * @return A map containing the AI's response and metadata.
+     */
+    public Map<String, String> openAIChatResponse(String message) throws OpenAiApiException;
 
-@Slf4j
-@Service
-public class OpenAIService {
+    /**
+     * Returning an Entity
+     * Example prompt : Generate the details of any bollywood song
+     *
+     * @return song
+     */
+    public Song openAIEntityExample(String message) throws OpenAiApiException ;
 
-	@Autowired
-	private ChatClient chatClient;
+    /**
+     * Returning a list Entity using prompt
+     * Example prompt : Generate the details of any 5 bollywood song.
+     *
+     * @return List of songs
+     */
+    public List<Song> openAIListEntityExample1(String message) throws OpenAiApiException;
 
-	@Autowired
-	private ChatClient friendlyVoiceChatClient;
+    /**
+     * Sends a message to the chat client with a specified voice parameter.
+     *
+     * @param message the message to be sent to the chat client
+     * @param voice the voice parameter to be set in the system
+     * @return the response content from the chat client
+     * Example prompt : message : "tell me a joke", voice : "jack sparrow"
+     * */
+    public String openAIDefaultSystemExample(String message, String voice) throws OpenAiApiException;
 
-	/**
-	 * Returning direct content from OpenAI
-	 */
-	public Map<String, String> openAIResponse(String message) {
-		//openAIEntityExample1("");
-		//openAIChatResponse(message);
-		openAIDefaultSystem("tell me a joke","jack sparrow");
-		return Map.of("response", chatClient.prompt().user(message).call().content());
-	}
-
-	/**
-	 * Returning chatResponse from OpenAI ChatResponse returns actual response and
-	 * metadata about how the response was generated mainly includes number of
-	 * tokens (both completion and prompt token), Rate Limit, etc
-	 */
-	public Map<String, String> openAIChatResponse(String message) {
-		var chatResponse = chatClient.prompt().user(message).call().chatResponse();
-	//	log.info(chatResponse.getMetadata().toString());
-		chatResponse.getMetadata().getUsage().getTotalTokens();
-		var response = new HashMap<String,String>();
-		response.put("response", chatResponse.getResult().getOutput().getContent());
-		response.put("metadata", chatResponse.getMetadata().toString());
-		return response;
-	}
-
-	/**
-	 * Returning an Entity
-	 */
-	public void openAIEntityExample(String message) {
-		Song song = chatClient.prompt().user("Generate the details of any bollywood song.").call().entity(Song.class);
-	//	log.info(song.toString());
-	}
-
-	/**
-	 * Returning an Entity
-	 */
-	public void openAIEntityExample1(String message) {
-		List<Song> songs = chatClient.prompt().user("Generate the details of any 5 bollywood song.").call()
-				.entity(new ParameterizedTypeReference<List<Song>>() {
-				});
-	//	log.info(songs.toString());
-	}
-
-	// System Default message example
-	public void openAIDefaultSystem(String message, String voice) {
-		var response =	friendlyVoiceChatClient
-				.prompt()
-				.system(s-> s.param("voice", voice))
-				.user(message)
-				.call()
-				.content();
-		log.info(response);
-	}
 }

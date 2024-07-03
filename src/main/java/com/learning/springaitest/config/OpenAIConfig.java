@@ -16,14 +16,15 @@ public class OpenAIConfig {
     ChatClient chatClient(ChatClient.Builder builder) {
 		return builder.build();
 	}
-//    @Bean
-//    ChatClient friendlyVoiceChatClient(ChatClient.Builder builder) {
-//        return builder.defaultSystem("You are a friendly chat bot that answers question in the voice of a {voice}")
-//                .build();
-//    }
-    
+
     @Bean
     ChatClient friendlyVoiceChatClient(ChatClient.Builder builder) {
+        return builder.defaultSystem("You are a friendly chat bot that answers question in the voice of a {voice}")
+                .build();
+    }
+    
+    @Bean
+    ChatClient friendlyVoiceChatClientUsingTemplate(ChatClient.Builder builder) {
         return builder.defaultSystem(defaultPrompt)
                 .build();
     }
