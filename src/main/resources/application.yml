@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: spring-ai-test
+  #Pass API key as environment variable, e.g. -DOPENAI_API_KEY=your-api-key
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      embedding:
+        options:
+          model: text-embedding-3-small
+sfg:
+  aiapp:
+    vectorStorePath: C:/Users/ashwi/OneDrive/Desktop/Spring/ktus1.json
+    documentsToLoad:
+      - classpath:/basics_of_electrical_and_electronics-2019-syllabus-ktustudents.in.pdf
+      - classpath:/basic_civil_&_mechanical-2019-syllabus-ktustudents.in.pdf
+      - classpath:/civil_&_mechanical_workshop-2019-syllabus-ktustudents.in.pdf
+      - classpath:/cpp-2019-syllabus-ktustudents.in.pdf
+      - classpath:/electrical_and_electronics_workshop-2019-syllabus-ktustudents.in.pdf
+      - classpath:/engg_graphics-2019-syllabus-ktustudents.in.pdf
+      - classpath:/engineering_chemistry-2019-syllabus-ktustudents.in.pdf
+      - classpath:/engineering_chemistry_Lab-2019-syllabus-ktustudents.in.pdf
+      - classpath:/engineering_physics_A-2019-syllabus-ktustudents.in.pdf
+      - classpath:/engineering_physics_B-2019-syllabus-ktustudents.in.pdf
+      - classpath:/engineering_physics_lab-2019-syllabus-ktustudents.in.pdf
+      - classpath:/life_skills_ktustudents.in.pdf
+      - classpath:/linear_algebra-and-calculus-MAT101-syllabus-ktu_compressed.pdf
+      - classpath:/professional_communication_ktustudents.in.pdf
+      - classpath:/vector_calculus-2019-syllabus-ktustudents.in.pdf
+
