@@ -35,29 +35,11 @@ public class OpenAIConfig {
                 .build();
     }
 
-//    @Bean
-//    SimpleVectorStore vectorStore(EmbeddingModel embeddingClient) {
-//        return new SimpleVectorStore(embeddingClient);
-//    }
 
     @Bean
     ChatClient friendlyVoiceChatClientUsingTemplate(ChatClient.Builder builder) {
         return builder.defaultSystem(defaultPrompt)
                 .build();
     }
-
-//    @Bean
-//    ChatClient chatClientChatClient(ChatClient.Builder builder,VectorStore vectorStore) {
-//        return  builder.defaultAdvisors(new QuestionAnswerAdvisor(vectorStore, SearchRequest.defaults())).build();
-//    }
-//
-//
-//
-//    @Bean
-//    public ApplicationRunner go(VectorStore vectorStore) {
-//        return args -> {
-//            vectorStore.add(new TokenTextSplitter().apply(new TikaDocumentReader(rules).get()));
-//        };
-//    }
 
 }
