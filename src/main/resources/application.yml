@@ -1,3 +1,7 @@
+api:
+  ninjas:
+    key: ${API_NINJAS_KEY}
+
 spring:
   application:
     name: spring-ai-test
