@@ -2,6 +2,8 @@ package com.learning.springaitest.config;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
+import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.SearchRequest;
@@ -40,6 +42,11 @@ public class OpenAIConfig {
     ChatClient friendlyVoiceChatClientUsingTemplate(ChatClient.Builder builder) {
         return builder.defaultSystem(defaultPrompt)
                 .build();
+    }
+
+    @Bean
+    ChatMemory chatMemory(){
+        return new InMemoryChatMemory();
     }
 
 }

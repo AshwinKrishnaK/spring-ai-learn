@@ -74,5 +74,11 @@ public class OpenAIController {
         return ResponseEntity.ok(openAIService.openAIDefaultSystemExample(message, voice));
     }
 
+    @GetMapping("/completion/memory")
+    public ResponseEntity<Map<String,String>> completionWithChatMemory(@RequestParam(value = "conversionId") String conversationId,
+                                                                       @RequestParam(value = "message") String message){
+        return ResponseEntity.ok(openAIService.memoryChatExample(message,conversationId));
+    }
+
 }
 

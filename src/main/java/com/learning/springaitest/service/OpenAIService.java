@@ -52,4 +52,5 @@ public interface OpenAIService {
      * */
     public String openAIDefaultSystemExample(String message, String voice) throws OpenAiApiException;
 
+    public Map<String,String> memoryChatExample(String message, String conversationId);
 }

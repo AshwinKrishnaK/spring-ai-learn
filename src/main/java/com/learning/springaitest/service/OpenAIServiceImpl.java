@@ -3,8 +3,15 @@ package com.learning.springaitest.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.ai.chat.memory.InMemoryChatMemory;
+import org.springframework.ai.chat.messages.Message;
+import org.springframework.ai.chat.messages.MessageType;
+import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.openai.api.common.OpenAiApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,6 +27,9 @@ public class OpenAIServiceImpl implements OpenAIService{
 
 	@Autowired
 	private ChatClient chatClient;
+
+	@Autowired
+	private ChatMemory chatMemory;
 
 	/**
 	 * This chatClient bean is already configured with default message
@@ -72,6 +82,21 @@ public class OpenAIServiceImpl implements OpenAIService{
 				.call()
 				.content();
 		log.info(response);
+		return response;
+	}
+
+	public Map<String,String> memoryChatExample(String message, String conversationId){
+		Map<String,String> response = new HashMap<>();
+		if(conversationId == null || conversationId.isEmpty()){
+			conversationId = UUID.randomUUID().toString();
+		}
+		var content = chatClient.prompt()
+				.advisors(new MessageChatMemoryAdvisor(chatMemory ,conversationId,5))
+				.user(message)
+				.call()
+				.content();
+		response.put("conversionId",conversationId);
+		response.put("content",content);
 		return response;
 	}
 }
